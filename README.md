@@ -19,20 +19,6 @@ C++ Specific
 #endif                      // Required after #if, #ifdef
 ```
 
-## Literals
-
-```cpp
-255, 0377, 0xff             // Integers (decimal, octal, hex)
-2147483647L, 0x7fffffffl    // Long (32-bit) integers
-123.0, 1.23e2               // double (real) numbers
-'a', '\141', '\x61'         // Character (literal, octal, hex)
-'\n', '\\', '\'', '\"'      // Newline, backslash, single quote, double quote
-"string\n"                  // Array of characters ending with newline and \0
-"hello" "world"             // Concatenated strings
-true, false                 // bool constants 1 and 0
-nullptr                     // Pointer type with the address of 0
-```
-
 ## Declarations
 
 ```cpp
@@ -333,28 +319,6 @@ cout << *q;
 shared_ptr<B> r;
 r = dynamic_pointer_cast<B>(t); // Converts t to a shared_ptr<B>
 
-```
-
-## `math.h`, `cmath` (floating point math)
-
-```cpp
-#include <cmath>            // Include cmath (std namespace)
-sin(x); cos(x); tan(x);     // Trig functions, x (double) is in radians
-asin(x); acos(x); atan(x);  // Inverses
-atan2(y, x);                // atan(y/x)
-sinh(x); cosh(x); tanh(x);  // Hyperbolic sin, cos, tan functions
-exp(x); log(x); log10(x);   // e to the x, log base e, log base 10
-pow(x, y); sqrt(x);         // x to the y, square root
-ceil(x); floor(x);          // Round up or down (as a double)
-fabs(x); fmod(x, y);        // Absolute value, x mod y
-```
-
-## `assert.h`, `cassert` (Debugging Aid)
-
-```cpp
-#include <cassert>        // Include iostream (std namespace)
-assert(e);                // If e is false, print message and abort
-#define NDEBUG            // (before #include <assert.h>), turn off assert
 ```
 
 ## `iostream.h`, `iostream` (Replaces `stdio.h`)
