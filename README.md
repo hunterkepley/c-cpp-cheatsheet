@@ -1,4 +1,5 @@
 # C & C++ QUICK REFERENCE / C++ CHEATSHEET
+# EDITED FOR A FRIEND FOR AN INTERVIEW
 
 #### General
 *What are the differences between references and pointers?*
@@ -21,14 +22,6 @@ C++ Specific
                             /* Multi-line comment */
 #include  <stdio.h>         // Insert standard header file
 #include "myfile.h"         // Insert file in current directory
-#define X some text         // Replace X with some text
-#define F(a,b) a+b          // Replace F(1,2) with 1+2
-#define X \
- some text                  // Multiline definition
-#undef X                    // Remove definition
-#if defined(X)              // Conditional compilation (#ifdef X)
-#else                       // Optional (#ifndef X or #if !defined(X))
-#endif                      // Required after #if, #ifdef
 ```
 
 ## Declarations
@@ -68,22 +61,6 @@ const int* p=a;             // Contents of p (elements of a) are constant
 int* const p=a;             // p (but not contents) are constant
 const int* const p=a;       // Both p and its contents are constant
 const int& cr=x;            // cr cannot be assigned to change x
-int8_t,uint8_t,int16_t,
-uint16_t,int32_t,uint32_t,
-int64_t,uint64_t            // Fixed length standard types
-auto it = m.begin();        // Declares it to the result of m.begin()
-auto const param = config["param"];
-                            // Declares it to the const result
-auto& s = singleton::instance();
-                            // Declares it to a reference of the result
-```
-
-## STORAGE Classes
-
-```cpp
-int x;                      // Auto (memory exists only while in scope)
-static int x;               // Global lifetime even if local scope
-extern int x;               // Information only, declared elsewhere
 ```
 
 ## Statements
@@ -135,6 +112,8 @@ T operator-(T x);           // -a calls function operator-(a)
 T operator++(int);          // postfix ++ or -- (parameter ignored)
 extern "C" {void f();}      // f() was compiled in C
 ```
+
+## Keeping in just because it's useful, but probably wouldn't even be asked about in an interview
 
 Function parameters and return values may be of any type. A function must either be declared or defined before
 it is used. It may be declared first and defined later. Every program consists of a set of a set of global variable
@@ -193,19 +172,8 @@ delete p                    // Destroy and free object at address p
 delete[] p                  // Destroy and free array of objects at p
 (T) x                       // Convert x to T (obsolete, use .._cast<T>(x))
 
-x * y                       // Multiply
-x / y                       // Divide (integers round toward 0)
-x % y                       // Modulo (result has sign of x)
-
-x + y                       // Add, or \&x[y]
-x - y                       // Subtract, or number of elements from *x to *y
 x << y                      // x shifted y bits to left (x * pow(2, y))
 x >> y                      // x shifted y bits to right (x / pow(2, y))
-
-x < y                       // Less than
-x <= y                      // Less than or equal to
-x > y                       // Greater than
-x >= y                      // Greater than or equal to
 
 x & y                       // Bitwise and (3 & 6 is 2)
 x ^ y                       // Bitwise exclusive or (3 ^ 6 is 5)
@@ -214,12 +182,15 @@ x && y                      // x and then y (evaluates y only if x (not 0))
 x || y                      // x or else y (evaluates y only if x is false (0))
 x = y                       // Assign y to x, returns new value of x
 x += y                      // x = x + y, also -= *= /= <<= >>= &= |= ^=
+// THIS IS A TERNARY IF STATEMENT BELOW
 x ? y : z                   // y if x is true (nonzero), else z
 throw x                     // Throw exception, aborts if not caught
 x , y                       // evaluates x and y, returns y (seldom used)
 ```
 
 ## Classes
+
+### Idk if you'll be asked to do anything with classes, it depends on what they want you to do in the job, but most likely not asked in an interview.
 
 ```cpp
 class T {                   // A new type
@@ -273,6 +244,8 @@ corresponding operations on each data member and each base class as shown above.
 constructor (required to create arrays) if the class has no constructors. Constructors, assignment, and
 destructors do not inherit.
 
+## Again with namespaces and templates, probably not going to be used in an interview, but to be safe you should look at them a lil bit
+
 ## Templates
 
 ```cpp
@@ -295,6 +268,8 @@ using namespace N;          // Make T visible without N::
 ```
 
 ## `memory` (dynamic memory management)
+
+### Super important all of this, I don't even use half of it normally for personal projects, but I'm sure they'd want the knowledge for an internship or job
 
 ```cpp
 #include <memory>           // Include memory (std namespace)
@@ -335,6 +310,8 @@ r = dynamic_pointer_cast<B>(t); // Converts t to a shared_ptr<B>
 
 ## `iostream.h`, `iostream` (Replaces `stdio.h`)
 
+### Basic user input, real simple, mainly just remember cin and cout
+
 ```cpp
 #include <iostream>         // Include iostream (std namespace)
 cin >> x >> y;              // Read words x and y (any type) from stdin
@@ -347,20 +324,6 @@ if (cin)                    // Good state (not EOF)?
                             // To read/write any type T:
 istream& operator>>(istream& i, T& x) {i >> ...; x=...; return i;}
 ostream& operator<<(ostream& o, const T& x) {return o << ...;}
-```
-
-## `fstream.h`, `fstream` (File I/O works like `cin`, `cout` as above)
-
-
-```cpp
-#include <fstream>          // Include filestream (std namespace)
-ifstream f1("filename");    // Open text file for reading
-if (f1)                     // Test if open and input available
-    f1 >> x;                // Read object from file
-f1.get(s);                  // Read char or line
-f1.getline(s, n);           // Read line into string s[n]
-ofstream f2("filename");    // Open file for writing
-if (f2) f2 << x;            // Write to file
 ```
 
 ## `string` (Variable sized character array)
@@ -379,6 +342,8 @@ getline(cin, s);          // Read line ending in '\n'
 ```
 
 ## `vector` (Variable sized array/stack with built in memory allocation)
+
+## I prefer deques over vectors in almost all cases, deques are *normally* just better than vectors
 
 ```cpp
 #include <vector>         // Include vector (std namespace)
@@ -408,15 +373,6 @@ T d[10]; vector<T> e(d, d+10);      // e is initialized from d
 #include <deque>          // Include deque (std namespace)
 a.push_front(x);          // Puts x at a[0], shifts elements toward back
 a.pop_front();            // Removes a[0], shifts toward front
-```
-
-## `utility` (pair)
-
-```cpp
-#include <utility>        // Include utility (std namespace)
-pair<string, int> a("hello", 3);  // A 2-element struct
-a.first;                  // "hello"
-a.second;                 // 3
 ```
 
 ## `map` (associative array - usually implemented as binary search trees - avg. time complexity: O(log n))
@@ -473,3 +429,82 @@ sort(a, a+n);             // Sort array a[0]..a[n-1] by <
 sort(a.begin(), a.end()); // Sort vector or deque
 reverse(a.begin(), a.end()); // Reverse vector or deque
 ```
+
+
+## `smart pointer`
+
+```Using smart pointers, we can make pointers to work in way that we don’t need to explicitly call delete. Smart pointer is a wrapper class over a pointer with operator like * and -> overloaded. The objects of smart pointer class look like pointer, but can do many things that a normal pointer can’t like automatic destruction (yes, we don’t have to explicitly use delete), reference counting and more.
+The idea is to make a class with a pointer, destructor and overloaded operators like * and ->. Since destructor is automatically called when an object goes out of scope, the dynamically allocated memory would automatically deleted (or reference count can be decremented). Consider the following simple smartPtr class.```
+
+```cpp
+// Smart pointers can be generic too, see https://www.geeksforgeeks.org/smart-pointers-cpp/ if you can't figure out how
+class SmartPtr { 
+   int *ptr;  // Actual pointer 
+public: 
+   explicit SmartPtr(int *p = NULL) { ptr = p; }  
+  
+   // Destructor 
+   ~SmartPtr() { delete(ptr); }   
+  
+   // Overloading dereferencing operator 
+   int &operator *() {  return *ptr; } 
+}; 
+  
+int main() { 
+    SmartPtr ptr(new int()); 
+    *ptr = 20; 
+    cout << *ptr; 
+  
+    // We don't need to call delete ptr: when the object  
+    // ptr goes out of scope, destructor for it is automatically 
+    // called and destructor does delete ptr. 
+  
+    return 0; 
+}
+```
+
+## `multi threading` (Just random stuff about multi threading)
+
+```cpp
+#include <iostream>
+#include <cstdlib>
+#include <pthread.h>
+
+using namespace std;
+
+#define NUM_THREADS 5 // Define the number of threads we want to use
+
+void *PrintHello(void *threadid) { // Our multhreaded function to use
+   long tid;
+   tid = (long)threadid;
+   cout << "Hello World! Thread ID, " << tid << endl;
+   pthread_exit(NULL);
+}
+
+int main () {
+   pthread_t threads[NUM_THREADS]; // Create a pthread [POSIX thread]
+   int rc; // Number of thread if we can't create it to print out
+   int i; // Number of thread if we can create it to print out
+   
+   for( i = 0; i < NUM_THREADS; i++ ) { // Make 5 threads
+      cout << "main() : creating thread, " << i << endl;
+      rc = pthread_create(&threads[i], NULL, PrintHello, (void *)i); // Creating a thread with our function
+      
+      if (rc) { // If we were unable to create it
+         cout << "Error:unable to create thread," << rc << endl;
+         exit(-1);
+      }
+   }
+   pthread_exit(NULL); // You must exit
+}
+```
+
+## `Data races`
+I really don't know a whole lot about data races in C++ specifically, but
+
+[Website explaining race conditions vs data races](https://www.modernescpp.com/index.php/race-condition-versus-data-race)
+
+I was asked about keeping threads safe from info being accessed from them (to prevent data races and such)
+
+[It wouldn't hurt to look at this on info about that](https://stackoverflow.com/questions/5125241/how-to-make-an-application-thread-safe)
+
