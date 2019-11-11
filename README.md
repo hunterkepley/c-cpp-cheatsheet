@@ -1,5 +1,17 @@
 # C & C++ QUICK REFERENCE / C++ CHEATSHEET
 
+#### General
+*What are the differences between references and pointers?*
+
+Both references and pointers can be used to change local variables of one function inside another function. Both of them can also be used to save copying of big objects when passed as arguments to functions or returned from functions, to get efficiency gain.
+Despite above similarities, there are following differences between references and pointers.
+
+References are less powerful than pointers
+1) Once a reference is created, it cannot be later made to reference another object; it cannot be reseated. This is often done with pointers.
+2) References cannot be NULL. Pointers are often made NULL to indicate that they are not pointing to any valid thing.
+3) A reference must be initialized when declared. There is no such restriction with pointers
+
+
 C++ Specific
 -----
 ## Preprocessor
@@ -460,74 +472,4 @@ swap(x, y);               // Exchange values of variables x and y
 sort(a, a+n);             // Sort array a[0]..a[n-1] by <
 sort(a.begin(), a.end()); // Sort vector or deque
 reverse(a.begin(), a.end()); // Reverse vector or deque
-```
-
-## `chrono` (Time related library)
-```cpp
-#include <chrono>         // Include chrono
-using namespace std::chrono; // Use namespace
-auto from =               // Get current time_point
-  high_resolution_clock::now();
-// ... do some work       
-auto to =                 // Get current time_point
-  high_resolution_clock::now();
-using ms =                // Define ms as floating point duration
-  duration<float, milliseconds::period>;
-                          // Compute duration in milliseconds
-cout << duration_cast<ms>(to - from)
-  .count() << "ms";
-```
-
-## `thread` (Multi-threading library)
-```cpp
-#include <thread>         // Include thread
-unsigned c = 
-  hardware_concurrency(); // Hardware threads (or 0 for unknown)
-auto lambdaFn = [](){     // Lambda function used for thread body
-    cout << "Hello multithreading";
-};
-thread t(lambdaFn);       // Create and run thread with lambda
-t.join();                 // Wait for t finishes
-
-// --- shared resource example ---
-mutex mut;                         // Mutex for synchronization
-condition_variable cond;           // Shared condition variable
-const char* sharedMes              // Shared resource
-  = nullptr;
-auto pingPongFn =                  // thread body (lambda). Print someone else's message
-  [&](const char* mes){
-    while (true){
-      unique_lock<mutex> lock(mut);// locks the mutex 
-      do {                
-        cond.wait(lock, [&](){     // wait for condition to be true (unlocks while waiting which allows other threads to modify)        
-          return sharedMes != mes; // statement for when to continue
-        });
-      } while (sharedMes == mes);  // prevents spurious wakeup
-      cout << sharedMes << endl;
-      sharedMes = mes;       
-      lock.unlock();               // no need to have lock on notify 
-      cond.notify_all();           // notify all condition has changed
-    }
-  };
-sharedMes = "ping";
-thread t1(pingPongFn, sharedMes);  // start example with 3 concurrent threads
-thread t2(pingPongFn, "pong");
-thread t3(pingPongFn, "boing");
-```
-
-## `future` (thread support library)
-```cpp
-#include <future>         // Include future
-function<int(int)> fib =  // Create lambda function
-  [&](int i){
-    if (i <= 1){
-      return 1;
-    }
-    return fib(i-1) 
-         + fib(i-2);
-  };
-future<int> fut =         // result of async function
-  async(launch::async, fib, 4); // start async function in other thread
-// do some other work 
-cout << fut.get();        // get result of async function. Wait if needed.
 ```
